@@ -22,7 +22,7 @@ class LIFOCache(BaseCaching):
         if key is not None and item is not None:
             if key in self.cache_data:
                 self.cache_data.pop(key)
-            elif len(self.cache_data) == BaseCaching.MAX_ITEMS:
+            elif len(self.cache_data) >= BaseCaching.MAX_ITEMS:
                 last_key, last_value = self.cache_data.popitem()
                 print(f"DISCARD: {last_key}")
             self.cache_data[key] = item
@@ -31,6 +31,4 @@ class LIFOCache(BaseCaching):
         """
         retrieve an item by key
         """
-        if key is not None:
-            return self.cache_data[key]
-        return None
+        return self.cache_data.get(key, None)
